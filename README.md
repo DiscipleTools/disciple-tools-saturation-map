@@ -1,2 +1,4 @@
-# disciple-tools-saturation-map
-A disciple tools saturation map for collecting lightweight data for global activity.
+# Disciple.Tools - Saturation Map
+
+Disciple.Tools - Saturation Map is the core prayer app for the prayer.global website.
+
