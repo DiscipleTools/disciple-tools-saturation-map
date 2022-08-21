@@ -1,9 +1,9 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Add extends DT_Magic_Url_Base
+class DT_Saturation_Map_Add extends DT_Magic_Url_Base
 {
-    public $page_title = 'Prayer.Global';
+    public $page_title = 'Saturation Map';
     public $root = 'add';
     public $type = 'records';
     public $url_token = 'add/records';
@@ -301,4 +301,4 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
     }
 
 }
-Prayer_Global_Add::instance();
+DT_Saturation_Map_Add::instance();

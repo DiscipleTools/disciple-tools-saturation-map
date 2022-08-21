@@ -2,7 +2,7 @@
 global $wp;
 $current_url = home_url( add_query_arg( array(), $wp->request ) );
 ?>
-<meta name="apple-mobile-web-app-title" content="Prayer.Global">
+<meta name="apple-mobile-web-app-title" content="Saturation Map">
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ); ?>assets/images/favicons/apple-touch-icon.png">
 
 <link rel="icon" type="image/png" sizes="512x512" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ); ?>assets/images/favicons/android-chrome-512x512.png">
@@ -22,7 +22,7 @@ $current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 <meta property="og:url"                content="<?php echo esc_url( $current_url ) ?>" />
 <meta property="og:type"               content="app" />
-<meta property="og:title"              content="Prayer.Global" />
+<meta property="og:title"              content="Saturation Map" />
 <meta property="og:description"        content="Join us in covering the world in prayer for disciple making using a creative, community-driven prayer coordination app." />
 <meta property="og:image"              content="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ); ?>assets/images/favicons/prayer-global-og.png" />
 <meta name="description" content="Join us in covering the world in prayer for disciple making using a creative, community-driven prayer coordination app.">

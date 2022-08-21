@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Prayer_Global_Prayer_App
+ * Class DT_Saturation_Map_Prayer_App
  */
 class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
 

@@ -5,12 +5,12 @@ class Disciple_Tools_Saturation_Map_Stats_Big_Map extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
-    public $page_title = 'Global Prayer Map';
-    public $root = 'race_app';
+    public $page_title = 'Global Map';
+    public $root = 'saturation_app';
     public $type = 'big_map';
-    public $type_name = 'Global Prayer Stats';
-    public static $token = 'race_app_big_map';
-    public $post_type = 'laps';
+    public $type_name = 'Global Map';
+    public static $token = 'saturation_app_big_map';
+    public $post_type = 'orgs';
 
     private static $_instance = null;
     public static function instance() {
@@ -99,27 +99,20 @@ class Disciple_Tools_Saturation_Map_Stats_Big_Map extends DT_Magic_Url_Base
                 'parts' => $this->parts,
                 'grid_data' => [],
                 'participants' => [],
-                'stats' => pg_global_race_stats(),
                 'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
             ]) ?>][0]
         </script>
-        <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>pray/heatmap.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'pray/heatmap.css' ) ) ?>" type="text/css" media="all">
         <?php
     }
 
     public function footer_javascript(){
-        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/footer.php' );
     }
 
     public function body(){
-        $lap_stats = pg_global_race_stats();
-        $finished_laps = number_format( (int) $lap_stats['number_of_laps'] - 1 );
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
@@ -138,7 +131,7 @@ class Disciple_Tools_Saturation_Map_Stats_Big_Map extends DT_Magic_Url_Base
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell large-5 show-for-large">
-                            <a href="/" class="navbar-brand">Prayer.Global</a>
+                            <a href="/" class="navbar-brand">Saturation Map</a>
                         </div>
                         <div class="cell small-9 large-2 center show-for-large">
                             <span class="two-em">Big Map</span>
@@ -269,10 +262,6 @@ class Disciple_Tools_Saturation_Map_Stats_Big_Map extends DT_Magic_Url_Base
                 ];
             case 'get_grid_details':
                 return $this->get_grid_details( $params['data'] );
-            case 'get_participants':
-                return $this->get_participants( $params['parts'] );
-            case 'get_user_locations':
-                return $this->get_user_locations( $params['parts'], $params['data'] );
             default:
                 return new WP_Error( __METHOD__, 'missing action parameter' );
         }

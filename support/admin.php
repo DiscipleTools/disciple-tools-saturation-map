@@ -2,9 +2,9 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 /**
- * Class Prayer_Global_Menu
+ * Class DT_Saturation_Map_Menu
  */
-class Prayer_Global_Menu {
+class DT_Saturation_Map_Menu {
 
     public $token = 'disciple_tools_saturation_map';
     public $page_title = 'Disciple.Tools - Saturation Map';
@@ -12,13 +12,13 @@ class Prayer_Global_Menu {
     private static $_instance = null;
 
     /**
-     * Prayer_Global_Menu Instance
+     * DT_Saturation_Map_Menu Instance
      *
-     * Ensures only one instance of Prayer_Global_Menu is loaded or can be loaded.
+     * Ensures only one instance of DT_Saturation_Map_Menu is loaded or can be loaded.
      *
      * @since 0.1.0
      * @static
-     * @return Prayer_Global_Menu instance
+     * @return DT_Saturation_Map_Menu instance
      */
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
@@ -83,11 +83,11 @@ class Prayer_Global_Menu {
             <?php
             switch ( $tab ) {
                 case "general":
-                    $object = new Prayer_Global_Tab_General();
+                    $object = new DT_Saturation_Map_Tab_General();
                     $object->content();
                     break;
                 case "second":
-                    $object = new Prayer_Global_Tab_Second();
+                    $object = new DT_Saturation_Map_Tab_Second();
                     $object->content();
                     break;
                 default:
@@ -100,12 +100,12 @@ class Prayer_Global_Menu {
         <?php
     }
 }
-Prayer_Global_Menu::instance();
+DT_Saturation_Map_Menu::instance();
 
 /**
- * Class Prayer_Global_Tab_General
+ * Class DT_Saturation_Map_Tab_General
  */
-class Prayer_Global_Tab_General {
+class DT_Saturation_Map_Tab_General {
     public function content() {
         ?>
         <div class="wrap">
@@ -287,9 +287,9 @@ class Prayer_Global_Tab_General {
 
 
 /**
- * Class Prayer_Global_Tab_Second
+ * Class DT_Saturation_Map_Tab_Second
  */
-class Prayer_Global_Tab_Second {
+class DT_Saturation_Map_Tab_Second {
     public function content() {
         ?>
         <div class="wrap">

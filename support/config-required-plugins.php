@@ -37,7 +37,7 @@ add_action( 'tgmpa_register', function() {
      * If the source is NOT from the .org repo, then source is also required.
      */
     $plugins[] = [
-        'name' => 'Prayer.Global Porch Images',
+        'name' => 'Saturation Map Porch Images',
         'slug' => 'disciple-tools-saturation-map-images',
         'source' => 'https://github.com/Pray4Movement/disciple-tools-saturation-map-images/releases/latest/download/disciple-tools-saturation-map-images.zip',
         'required' => true,

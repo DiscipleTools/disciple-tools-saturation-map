@@ -5,10 +5,10 @@ class Disciple_Tools_Saturation_Map_Home extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
-    public $page_title = 'Prayer.Global';
-    public $root = 'prayer_global';
-    public $type = 'porch';
-    public static $token = 'disciple_tools_saturation_map';
+    public $page_title = 'Saturation Map';
+    public $root = 'saturation_app';
+    public $type = 'home';
+    public static $token = 'saturation_app_home';
 
     private static $_instance = null;
     public static function instance() {
@@ -58,23 +58,25 @@ class Disciple_Tools_Saturation_Map_Home extends DT_Magic_Url_Base
     }
 
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
-        return [];
+        $allowed_js[] = 'jquery-touch-punch';
+        $allowed_js[] = 'mapbox-gl';
+        $allowed_js[] = 'jquery-cookie';
+        $allowed_js[] = 'mapbox-cookie';
+        $allowed_js[] = 'heatmap-js';
+        return $allowed_js;
     }
 
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
-        return [];
+        $allowed_css[] = 'mapbox-gl-css';
+        $allowed_css[] = 'introjs-css';
+        $allowed_css[] = 'foundation-css';
+        $allowed_css[] = 'heatmap-css';
+        $allowed_css[] = 'site-css';
+        return $allowed_css;
     }
 
-    public function _header() {
-        $this->header_style();
-        $this->header_javascript();
-    }
-    public function _footer(){
-        $this->footer_javascript();
-    }
 
     public function header_javascript(){
-        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
 
         ?>
         <script>
@@ -88,29 +90,14 @@ class Disciple_Tools_Saturation_Map_Home extends DT_Magic_Url_Base
                     'type' => $this->type,
                     'root' => $this->root,
                 ],
-                'current_lap' => pg_current_global_lap(),
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
-                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
             ]) ?>][0]
 
             console.log(jsObject)
 
             jQuery(document).ready(function($){
-
-                /* video modal */
-                jQuery('#video-image-link').on('click', function(){
-                    let body = jQuery('#demo_video .modal-body')
-                    let modal = jQuery('#demo_video')
-                    body.html('<iframe style="width:100%;max-width:600px;height:300px;" src="https://player.vimeo.com/video/715752828?h=d39d43cea8&amp;badge=0&amp;autoplay=1&amp;loop=1&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="Moravian challenge" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
-
-                    modal.modal('show')
-                    modal.on('hide.bs.modal', function () {
-                        body.empty()
-                    })
-                })
-
                 window.api_post = ( action, data ) => {
                     return jQuery.ajax({
                         type: "POST",
@@ -130,27 +117,27 @@ class Disciple_Tools_Saturation_Map_Home extends DT_Magic_Url_Base
                 window.api_post( 'get_stats', {} )
                     .done(function(stats) {
                         console.log(stats)
-                        jQuery('#current_time_elapsed').html(stats.current_time_elapsed )
-                        jQuery('#current_participants').html(stats.current_participants )
-                        jQuery('#current_completed').html(stats.current_completed )
-                        jQuery('#current_remaining').html(stats.current_remaining )
-                        jQuery('#global_time_elapsed').html(stats.global_time_elapsed )
-                        jQuery('#global_participants').html(stats.global_participants )
-                        jQuery('#global_minutes_prayed').html(stats.global_minutes_prayed )
-                        jQuery('#global_lap_number').html(stats.global_lap_number )
+
                     })
 
             })
         </script>
+        <style>
+            body {
+                background: white;
+            }
+        </style>
         <?php
     }
 
     public function footer_javascript(){
-        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/footer.php' );
+
     }
 
     public function body(){
-        require_once( 'body.php' );
+        ?>
+        <a href="/">Home</a> | <a href="/saturation_app/solidarity_map/">Global Map</a> |  <a href="/contacts">Contacts</a> |
+        <?php
     }
 
     public function add_endpoints() {
@@ -175,22 +162,9 @@ class Disciple_Tools_Saturation_Map_Home extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-//        $params = dt_recursive_sanitize_array( $params );
+        $params = dt_recursive_sanitize_array( $params );
 
-        $current_global_lap = pg_current_global_lap();
-        $current_global_stats = pg_global_stats_by_lap_number( $current_global_lap['lap_number'] );
-        $global_race = pg_global_race_stats();
-
-        return [
-            'current_time_elapsed' => $current_global_stats['time_elapsed'],
-            'current_participants' => $current_global_stats['participants'],
-            'current_completed' => $current_global_stats['completed'],
-            'current_remaining' => $current_global_stats['remaining'],
-            'global_time_elapsed' => $global_race['time_elapsed'],
-            'global_participants' => $global_race['participants'],
-            'global_minutes_prayed' => $global_race['minutes_prayed'],
-            'global_lap_number' => $global_race['number_of_laps'],
-        ];
+        return true; // @todo
     }
 
 }

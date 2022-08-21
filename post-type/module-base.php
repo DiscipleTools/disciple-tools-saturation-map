@@ -1,23 +1,15 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-/**
- * Class Prayer_Global_Laps_Post_Type
- * Load the core post type hooks into the Disciple.Tools system
- */
-class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
-    /**
-     * Define post type variables
-     * @todo update these variables with your post_type, module key, and names.
-     * @var string
-     */
-    public $post_type = "laps";
-    public $module = "laps_base";
-    public $single_name = 'Lap';
-    public $plural_name = 'Laps';
+class DT_Saturation_Map_Orgs_Base extends DT_Module_Base {
+
+    public $post_type = "organizations";
+    public $module = "org_base";
+    public $single_name = 'Org';
+    public $plural_name = 'Orgs';
     public static function post_type(){
-        return 'laps';
+        return 'organizations';
     }
 
     private static $_instance = null;
@@ -43,6 +35,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         add_filter( 'dt_details_additional_tiles', [ $this, 'dt_details_additional_tiles' ], 10, 2 );
         add_action( 'dt_details_additional_section', [ $this, 'dt_details_additional_section' ], 20, 2 );
         add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ], 99 );
+        add_filter( 'dt_get_post_type_settings', [ $this, 'dt_get_post_type_settings' ], 20, 2 );
 
         // hooks
         add_action( "post_connection_removed", [ $this, "post_connection_removed" ], 10, 4 );
@@ -52,6 +45,8 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         add_action( "dt_post_created", [ $this, "dt_post_created" ], 10, 3 );
         add_action( "dt_comment_created", [ $this, "dt_comment_created" ], 10, 4 );
 
+        add_filter( 'dt_saturation_map_lists', [ $this, 'saturation_type_lists' ], 10, 1 );
+
         //list
         add_filter( "dt_user_list_filters", [ $this, "dt_user_list_filters" ], 10, 2 );
         add_filter( "dt_filter_access_permissions", [ $this, "dt_filter_access_permissions" ], 20, 2 );
@@ -59,22 +54,28 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     }
 
     public function after_setup_theme(){
+        $this->single_name = __( "Org", 'disciple-tools-saturation-map' );
+        $this->plural_name = __( "Orgs", 'disciple-tools-saturation-map' );
+
         if ( class_exists( 'Disciple_Tools_Post_Type_Template' ) ) {
             new Disciple_Tools_Post_Type_Template( $this->post_type, $this->single_name, $this->plural_name );
         }
     }
 
-    /**
-     * @todo define the permissions for the roles
-     * Documentation
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/roles-permissions.md#rolesd
-     */
+    public function dt_get_post_type_settings( $settings, $post_type ){
+        if ( $post_type === $this->post_type ){
+            $settings['label_singular'] = __( "Org", 'disciple-tools-saturation-map' );
+            $settings['label_plural'] = __( "Orgs", 'disciple-tools-saturation-map' );
+        }
+        return $settings;
+    }
+
     public function dt_set_roles_and_permissions( $expected_roles ){
 
         if ( !isset( $expected_roles["multiplier"] ) ){
             $expected_roles["multiplier"] = [
 
-                "label" => __( 'Multiplier', 'prayer-global' ),
+                "label" => __( 'Multiplier', 'disciple-tools-saturation-map' ),
                 "description" => "Interacts with Contacts and Groups",
                 "permissions" => []
             ];
@@ -101,59 +102,72 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         return $expected_roles;
     }
 
+    /**
+     * Builds list from other field lists
+     *
+     * @param $list_types
+     * @return mixed
+     */
+    public function saturation_type_lists( $list_types ) {
+        $fields = get_option( 'dt_field_customizations' );
+
+        if ( isset( $fields['organizations'] ) ) {
+            foreach( $fields['organizations'] as $key => $field ) {
+                if ( 'list_type_' === substr( $key, 0, 10 ) ) {
+                    $list_types[$key] = [
+                        'label' => $field['name'],
+                        'description' => '',
+                        'color' => '#4CAF50'
+                    ];
+                }
+            }
+        }
+
+        return $list_types;
+    }
+
     public function dt_custom_fields_settings( $fields, $post_type ){
-        if ( $post_type === $this->post_type ){
+        if ( $post_type === $this->post_type  ){
 
-
-            $fields['type'] = [
-                'name'        => __( 'Type', 'prayer-global' ),
-                'description' => __( 'Type of Lap', 'prayer-global' ),
-                'type'        => 'key_select',
-                'default'     => [
-                    'custom' => [
-                        'label' => __( 'Custom', 'prayer-global' ),
-                        'description' => __( 'Custom laps', 'prayer-global' ),
-                    ],
-                    'global'   => [
-                        'label' => __( 'Global (Auto)', 'prayer-global' ),
-                        'description' => __( 'Do not manually create! System creates new laps when ready.', 'prayer-global' ),
-                    ]
-                ],
-                'tile'     => 'status',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/nametag.svg',
-                "default_color" => "#366184",
-                "show_in_table" => 1,
-            ];
             $fields['status'] = [
-                'name'        => __( 'Status', 'prayer-global' ),
-                'description' => __( 'Set the current status.', 'prayer-global' ),
+                'name'        => __( 'Status', 'disciple-tools-saturation-map' ),
+                'description' => __( 'Set the current status.', 'disciple-tools-saturation-map' ),
                 'type'        => 'key_select',
                 'default'     => [
-                    'active'   => [
-                        'label' => __( 'Active', 'prayer-global' ),
-                        'description' => __( 'Is active.', 'prayer-global' ),
-                        'color' => "#FFA500"
-                    ],
-                    'complete' => [
-                        'label' => __( 'Complete', 'prayer-global' ),
-                        'description' => __( 'No longer active.', 'prayer-global' ),
-                        'color' => "#4CAF50"
-                    ],
                     'inactive' => [
-                        'label' => __( 'Inactive', 'prayer-global' ),
-                        'description' => __( 'No longer active.', 'prayer-global' ),
+                        'label' => __( 'Inactive', 'disciple-tools-saturation-map' ),
+                        'description' => __( 'No longer active.', 'disciple-tools-saturation-map' ),
                         'color' => "#F43636"
+                    ],
+                    'active'   => [
+                        'label' => __( 'Active', 'disciple-tools-saturation-map' ),
+                        'description' => __( 'Is active.', 'disciple-tools-saturation-map' ),
+                        'color' => "#4CAF50"
                     ],
                 ],
                 'tile'     => 'status',
                 'icon' => get_template_directory_uri() . '/dt-assets/images/status.svg',
                 "default_color" => "#366184",
-                "show_in_table" => 2,
-                "in_create_form" => true,
+                "show_in_table" => 10,
+            ];
+
+
+            /**
+             * Custom fields must be added with list_type_ at the beginning and must be a drop down.
+             */
+            $fields['list_type'] = [
+                'name'        => __( 'List Type', 'disciple-tools-saturation-map' ),
+                'description' => __( 'Set the current status.', 'disciple-tools-saturation-map' ),
+                'type'        => 'key_select',
+                'default'     => apply_filters('dt_saturation_map_lists', [] ),
+                'tile'     => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/status.svg',
+                "default_color" => "#366184",
+                "show_in_table" => 10,
             ];
             $fields['assigned_to'] = [
-                'name'        => __( 'Assigned To', 'prayer-global' ),
-                'description' => __( "Select the main person who is responsible for reporting on this record.", 'prayer-global' ),
+                'name'        => __( 'Assigned To', 'disciple-tools-saturation-map' ),
+                'description' => __( "Select the main person who is responsible for reporting on this record.", 'disciple-tools-saturation-map' ),
                 'type'        => 'user_select',
                 'default'     => '',
                 'tile' => 'status',
@@ -167,7 +181,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
              * Common and recommended fields
              */
             $fields['start_date'] = [
-                'name'        => __( 'Start Date', 'prayer-global' ),
+                'name'        => __( 'Start Date', 'disciple-tools-saturation-map' ),
                 'description' => '',
                 'type'        => 'date',
                 'default'     => time(),
@@ -175,65 +189,136 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'icon' => get_template_directory_uri() . '/dt-assets/images/date-start.svg',
             ];
             $fields['end_date'] = [
-                'name'        => __( 'End Date', 'prayer-global' ),
+                'name'        => __( 'End Date', 'disciple-tools-saturation-map' ),
                 'description' => '',
                 'type'        => 'date',
                 'default'     => '',
                 'tile' => 'details',
                 'icon' => get_template_directory_uri() . '/dt-assets/images/date-end.svg',
             ];
-            $fields['start_time'] = [
-                'name'        => __( 'Start time', 'prayer-global' ),
+            $fields['description'] = [
+                'name'        => __( 'Description', 'disciple-tools-saturation-map' ),
                 'description' => '',
-                'type'        => 'number',
+                'type'        => 'textarea',
                 'default'     => '',
-                "hidden" => true,
-            ];
-            $fields['end_time'] = [
-                'name'        => __( 'End Time', 'prayer-global' ),
-                'description' => '',
-                'type'        => 'number',
-                'default'     => '',
-                "hidden" => true,
+                'tile' => 'details',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/date-end.svg',
             ];
 
-            $fields['global_lap_number'] = [
-                'name'        => __( 'Global Lap Number', 'prayer-global' ),
-                'description' => '',
-                'type'        => 'text',
-                'default'     => '',
-                'tile' => 'details',
-                "hidden" => false,
+
+
+            /**
+             * @todo this section adds location support to this post type. remove if not needed.
+             * location elements
+             */
+            $fields['location_grid'] = [
+                'name'        => __( 'Locations', 'disciple-tools-saturation-map' ),
+                'description' => __( 'The general location where this contact is located.', 'disciple-tools-saturation-map' ),
+                'type'        => 'location',
+                'mapbox'    => false,
+                "in_create_form" => true,
+                "tile" => "details",
+                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg",
             ];
-            $fields['prayer_app_global_magic_key'] = [
-                'name'        => __( 'Global Key', 'prayer-global' ),
-                'description' => '',
-                'type'        => 'text',
-                'default'     => substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 ),
-                'tile' => 'details',
+            $fields['location_grid_meta'] = [
+                'name'        => __( 'Locations', 'disciple-tools-saturation-map' ), //system string does not need translation
+                'description' => __( 'The general location where this record is located.', 'disciple-tools-saturation-map' ),
+                'type'        => 'location_meta',
+                "tile"      => "details",
+                'mapbox'    => false,
+                'hidden' => true,
+                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg?v=2",
             ];
-            $fields['prayer_app_custom_magic_key'] = [
-                'name'        => __( 'Custom Key', 'prayer-global' ),
+            $fields["contact_address"] = [
+                "name" => __( 'Address', 'disciple-tools-saturation-map' ),
+                "icon" => get_template_directory_uri() . "/dt-assets/images/house.svg",
+                "type" => "communication_channel",
+                "tile" => "details",
+                'mapbox'    => false,
+                "customizable" => false
+            ];
+            if ( DT_Mapbox_API::get_key() ){
+                $fields["contact_address"]["custom_display"] = true;
+                $fields["contact_address"]["mapbox"] = true;
+                unset( $fields["contact_address"]["tile"] );
+                $fields["location_grid"]["mapbox"] = true;
+                $fields["location_grid_meta"]["mapbox"] = true;
+                $fields["location_grid"]["hidden"] = true;
+                $fields["location_grid_meta"]["hidden"] = false;
+            }
+            // end locations
+
+            /**
+             * @todo this adds generational support to this post type. remove if not needed.
+             * generation and peer connection fields
+             */
+            $fields["parents"] = [
+                "name" => __( 'Parents', 'disciple-tools-saturation-map' ),
                 'description' => '',
-                'type'        => 'text',
-                'default'     => substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 ),
-                'tile' => 'details',
+                "type" => "connection",
+                "post_type" => $this->post_type,
+                "p2p_direction" => "from",
+                "p2p_key" => $this->post_type."_to_".$this->post_type,
+                'tile' => 'connections',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/group-parent.svg',
+                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
+            ];
+            $fields["peers"] = [
+                "name" => __( 'Peers', 'disciple-tools-saturation-map' ),
+                'description' => '',
+                "type" => "connection",
+                "post_type" => $this->post_type,
+                "p2p_direction" => "any",
+                "p2p_key" => $this->post_type."_to_peers",
+                'tile' => 'connections',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/group-peer.svg',
+                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
+            ];
+            $fields["children"] = [
+                "name" => __( 'Children', 'disciple-tools-saturation-map' ),
+                'description' => '',
+                "type" => "connection",
+                "post_type" => $this->post_type,
+                "p2p_direction" => "to",
+                "p2p_key" => $this->post_type."_to_".$this->post_type,
+                'tile' => 'connections',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/group-child.svg',
+                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
+            ];
+            // end generations
+
+            /**
+             * @todo this adds people groups support to this post type. remove if not needed.
+             * Connections to other post types
+             */
+            $fields["peoplegroups"] = [
+                "name" => __( 'People Groups', 'disciple-tools-saturation-map' ),
+                'description' => __( 'The people groups connected to this record.', 'disciple-tools-saturation-map' ),
+                "type" => "connection",
+                "tile" => 'details',
+                "post_type" => "peoplegroups",
+                "p2p_direction" => "to",
+                "p2p_key" => $this->post_type."_to_peoplegroups",
+                'icon' => get_template_directory_uri() . "/dt-assets/images/people-group.svg",
             ];
 
             $fields['contacts'] = [
-                "name" => __( 'Contacts', 'prayer-global' ),
+                "name" => __( 'Contacts', 'disciple-tools-saturation-map' ),
                 "description" => '',
                 "type" => "connection",
                 "post_type" => "contacts",
                 "p2p_direction" => "to",
                 "p2p_key" => $this->post_type."_to_contacts",
-                "tile" => "other",
+                "tile" => "status",
                 'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
                 'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-contact.svg",
                 "show_in_table" => 35
             ];
         }
 
+        /**
+         * @todo this adds connection to contacts. remove if not needed.
+         */
         if ( $post_type === "contacts" ){
             $fields[$this->post_type] = [
                 "name" => $this->plural_name,
@@ -249,43 +334,65 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             ];
         }
 
+        /**
+         * @todo this adds connection to groups. remove if not needed.
+         */
+//        if ( $post_type === "groups" ){
+//            $fields[$this->post_type] = [
+//                "name" => $this->plural_name,
+//                "description" => '',
+//                "type" => "connection",
+//                "post_type" => $this->post_type,
+//                "p2p_direction" => "from",
+//                "p2p_key" => $this->post_type."_to_groups",
+//                "tile" => "other",
+//                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
+//                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-group.svg",
+//                "show_in_table" => 35
+//            ];
+//        }
         return $fields;
     }
 
+    /**
+     * @todo define tiles
+     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md
+     */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ){
         if ( $post_type === $this->post_type ){
-            $tiles["other"] = [ "label" => __( "Other", 'prayer-global' ) ];
+            $tiles["connections"] = [ "label" => __( "Connections", 'disciple-tools-saturation-map' ) ];
+            $tiles["other"] = [ "label" => __( "Other", 'disciple-tools-saturation-map' ) ];
         }
         return $tiles;
     }
 
+    /**
+     * @todo define additional section content
+     * Documentation
+     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md#add-custom-content
+     */
     public function dt_details_additional_section( $section, $post_type ){
+
         if ( $post_type === $this->post_type && $section === "other" ) {
-            // hide opposite key app
+            $fields = DT_Posts::get_post_field_settings( $post_type );
             $post = DT_Posts::get_post( $this->post_type, get_the_ID() );
-                dt_write_log( $post );
-            if ( isset( $post['type']['key'] ) && $post['type']['key'] === 'global' ) {
-                ?>
-                <script>
-                    jQuery(document).ready(function(){
-                        jQuery('.section-app-links.prayer_app_custom_magic_key').hide().prev().hide()
-                        console.log('test')
-                    })
-                </script>
-                <?php
-            } else if ( isset( $post['type']['key'] ) && $post['type']['key'] === 'custom' ) {
-                ?>
-                <script>
-                    jQuery(document).ready(function(){
-                        jQuery('.section-app-links.prayer_app_global_magic_key').hide().prev().hide()
-                        console.log('test')
-                    })
-                </script>
-                <?php
-            }
-        }
+            ?>
+            <div class="section-subheader">
+                <?php esc_html_e( "Custom Section Contact", 'disciple-tools-saturation-map' ) ?>
+            </div>
+            <div>
+                <p>Add information or custom fields here</p>
+            </div>
+
+        <?php }
     }
 
+    /**
+     * action when a post connection is added during create or update
+     * @todo catch field changes and do additional processing
+     *
+     * The next three functions are added, removed, and updated of the same field concept
+     */
     public function post_connection_added( $post_type, $post_id, $field_key, $value ){
 //        if ( $post_type === $this->post_type ){
 //            if ( $field_key === "members" ){
@@ -311,17 +418,9 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
     //filter at the start of post update
     public function dt_post_update_fields( $fields, $post_type, $post_id ){
-        if ( $post_type === $this->post_type ){
-            $post = DT_Posts::get_post( $this->post_type, $post_id, true, false );
-            if ( isset( $post['type']['key'] ) && 'custom' === $post['type']['key'] ) {
-                if ( isset( $fields["start_date"] ) ){
-                    $fields["start_time"] = $fields["start_date"];
-                }
-                if ( isset( $fields["end_date"] ) ){
-                    $fields["end_time"] = $fields["end_date"];
-                }
-            }
-        }
+//        if ( $post_type === $this->post_type ){
+//            // execute your code here
+//        }
         return $fields;
     }
 
@@ -333,20 +432,9 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     // filter at the start of post creation
     public function dt_post_create_fields( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
-            if ( ! isset( $fields["status"] ) || empty( $fields["status"] ) ){
-                $fields["status"] = 'active';
-            }
-            if ( ! isset( $fields["prayer_app_global_magic_key"] ) || empty( $fields["prayer_app_global_magic_key"] ) ){
-                $fields["prayer_app_global_magic_key"] = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
-            }
-            if ( ! isset( $fields["prayer_app_custom_magic_key"] ) || empty( $fields["prayer_app_custom_magic_key"] ) ){
-                $fields["prayer_app_custom_magic_key"] = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
-            }
-            if ( ! isset( $fields["start_date"] ) || empty( $fields["start_date"] ) ){
-                $fields["start_date"] = gmdate( 'Y-m-d H:m:s', time() );
-            }
-            if ( ! isset( $fields["start_time"] ) || empty( $fields["start_time"] ) ){
-                $fields["start_time"] = time();
+            $post_fields = DT_Posts::get_post_field_settings( $post_type );
+            if ( isset( $post_fields["status"] ) && !isset( $fields["status"] ) ){
+                $fields["status"] = "active";
             }
         }
         return $fields;
@@ -354,35 +442,19 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
     //action when a post has been created
     public function dt_post_created( $post_type, $post_id, $initial_fields ){
-
-        // creates initial global lap
-        if ( $post_type === $this->post_type && isset( $initial_fields['type'] ) && 'global' === $initial_fields['type'] ){
-            $lap = get_option( 'pg_current_global_lap' );
-            if ( empty( $lap ) ) {
-                $post = DT_Posts::get_post( $this->post_type, $post_id, false, false );
-                update_post_meta( $post_id, 'global_lap_number', 1 );
-                if ( ! isset( $post['prayer_app_global_magic_key'] ) ) {
-                    $key = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
-                    update_post_meta( $post_id, 'prayer_app_global_magic_key', $key );
-                    $post['prayer_app_global_magic_key'] = $key;
-                }
-                if ( ! isset( $post['start_time'] ) ) {
-                    update_post_meta( $post_id, 'start_time', time() );
-                    update_post_meta( $post_id, 'start_date', time() );
-                    $post['start_time'] = time();
-                }
-                $lap = [
-                    'lap_number' => 1,
-                    'post_id' => $post['ID'],
-                    'key' => $post['prayer_app_global_magic_key'],
-                    'start_time' => $post['start_time'],
-                ];
-                update_option( 'pg_current_global_lap', $lap, true );
-            }
-        }
     }
 
+    //list page filters function
+
+    /**
+     * @todo adjust queries to support list counts
+     * Documentation
+     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/list-query.md
+     */
     private static function get_my_status(){
+        /**
+         * @todo adjust query to return count for update needed
+         */
         global $wpdb;
         $post_type = self::post_type();
         $current_user = get_current_user_id();
@@ -462,7 +534,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
             $filters["tabs"][] = [
                 "key" => "assigned_to_me",
-                "label" => __( "Assigned to me", 'prayer-global' ),
+                "label" => __( "Assigned to me", 'disciple-tools-saturation-map' ),
                 "count" => $total_my,
                 "order" => 20
             ];
@@ -470,7 +542,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             $filters["filters"][] = [
                 'ID' => 'my_all',
                 'tab' => 'assigned_to_me',
-                'name' => __( "All", 'prayer-global' ),
+                'name' => __( "All", 'disciple-tools-saturation-map' ),
                 'query' => [
                     'assigned_to' => [ 'me' ],
                     'sort' => 'status'
@@ -527,7 +599,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 }
                 $filters["tabs"][] = [
                     "key" => "all",
-                    "label" => __( "All", 'prayer-global' ),
+                    "label" => __( "All", 'disciple-tools-saturation-map' ),
                     "count" => $total_all,
                     "order" => 10
                 ];
@@ -535,7 +607,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 $filters["filters"][] = [
                     'ID' => 'all',
                     'tab' => 'all',
-                    'name' => __( "All", 'prayer-global' ),
+                    'name' => __( "All", 'disciple-tools-saturation-map' ),
                     'query' => [
                         'sort' => '-post_date'
                     ],

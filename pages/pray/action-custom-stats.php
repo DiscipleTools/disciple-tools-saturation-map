@@ -88,7 +88,7 @@ class PG_Custom_Prayer_App_Stats extends PG_Custom_Prayer_App {
         </style>
         <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_navbar_nav pb_scrolled-light" id="pb-navbar">
             <div class="container">
-                <a class="navbar-brand" href="/">Prayer.Global</a>
+                <a class="navbar-brand" href="/">Saturation Map</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span><i class="ion-navicon"></i></span>
                 </button>

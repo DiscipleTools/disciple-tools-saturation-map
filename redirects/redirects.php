@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 class Disciple_Tools_Saturation_Map_Newest_Lap extends DT_Magic_Url_Base
 {
-    public $page_title = 'Prayer.Global';
+    public $page_title = 'Saturation Map';
     public $root = 'newest';
     public $type = 'lap';
     public $url_token = 'newest/lap';
@@ -42,7 +42,7 @@ Disciple_Tools_Saturation_Map_Newest_Lap::instance();
 
 class Disciple_Tools_Saturation_Map_Newest_Lap_Stats extends DT_Magic_Url_Base
 {
-    public $page_title = 'Prayer.Global';
+    public $page_title = 'Saturation Map';
     public $root = 'newest';
     public $type = 'stats';
     public $url_token = 'newest/stats';
@@ -82,7 +82,7 @@ Disciple_Tools_Saturation_Map_Newest_Lap_Stats::instance();
 
 class Disciple_Tools_Saturation_Map_Newest_Lap_Map extends DT_Magic_Url_Base
 {
-    public $page_title = 'Prayer.Global';
+    public $page_title = 'Saturation Map';
     public $root = 'newest';
     public $type = 'map';
     public $url_token = 'newest/map';

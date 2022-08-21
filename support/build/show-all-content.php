@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Show_All extends DT_Magic_Url_Base
+class DT_Saturation_Map_Show_All extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
@@ -198,4 +198,4 @@ class Prayer_Global_Show_All extends DT_Magic_Url_Base
     }
 
 }
-Prayer_Global_Show_All::instance();
+DT_Saturation_Map_Show_All::instance();

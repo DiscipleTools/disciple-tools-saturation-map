@@ -119,7 +119,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell large-5 show-for-large">
-                            <a href="/" class="navbar-brand">Prayer.Global</a>
+                            <a href="/" class="navbar-brand">Saturation Map</a>
                         </div>
                         <div class="cell small-9 large-2 center show-for-large">
                             <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>

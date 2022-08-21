@@ -76,50 +76,56 @@ class Disciple_Tools_Saturation_Map {
     }
 
     private function __construct() {
-        global $wpdb;
-        $wpdb->location_grid_facts = 'location_grid_facts';
-        $wpdb->location_grid_cities = 'location_grid_cities';
-        $wpdb->location_grid_people_groups = 'location_grid_people_groups';
-        $wpdb->location_grid_names = 'location_grid_names';
+//        global $wpdb;
+//        $wpdb->location_grid_facts = 'location_grid_facts';
+//        $wpdb->location_grid_cities = 'location_grid_cities';
+//        $wpdb->location_grid_people_groups = 'location_grid_people_groups';
+//        $wpdb->location_grid_names = 'location_grid_names';
 
-        require_once( 'global-utilities.php' );
-        require_once( 'pages/pray/stacker-text.php' );
-        require_once( 'pages/pray/stacker.php' );
+//        require_once( 'global-utilities.php' );
+//        require_once( 'pages/pray/stacker-text.php' );
+//        require_once( 'pages/pray/stacker.php' );
 
-        if ( is_admin() ) {
-            require_once( 'support/admin.php' );
-        }
+//        if ( is_admin() ) {
+//            require_once( 'support/admin.php' );
+//        }
 
-        require_once( 'redirects/loader.php' );
+//        require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
 
         // home
         require_once( 'pages/home/magic-home.php' );
-        require_once( 'pages/media/magic-media.php' );
-        require_once( 'pages/contact/loader.php' );
-        require_once( 'pages/privacy/magic-privacy.php' );
-        require_once( 'pages/data-sources/magic-data-sources.php' );
+
+        require_once( 'magic/heatmap.php' );
+        require_once( 'magic/solidarity-map.php' );
+
+        require_once( 'magic/magic-link-post-type.php' );
+
+//        require_once( 'pages/media/magic-media.php' );
+//        require_once( 'pages/contact/loader.php' );
+//        require_once( 'pages/privacy/magic-privacy.php' );
+//        require_once( 'pages/data-sources/magic-data-sources.php' );
 
         // prayer_app
-        require_once( 'pages/pray/magic-global.php' );
-        require_once( 'pages/pray/magic-custom.php' );
+//        require_once( 'pages/pray/magic-global.php' );
+//        require_once( 'pages/pray/magic-custom.php' );
 
         // race_app
-        require_once( 'pages/race/big-list.php' );
-        require_once( 'pages/race/big-map.php' );
+//        require_once( 'pages/race/big-list.php' );
+//        require_once( 'pages/race/big-map.php' );
 
         // user
-        require_once( 'pages/user/user-link.php' );
+//        require_once( 'pages/user/user-link.php' );
 
         // admin
-        require_once( 'charts/charts-loader.php' );
-        require_once( 'support/build/show-all-content.php' );
+//        require_once( 'charts/charts-loader.php' );
+//        require_once( 'support/build/show-all-content.php' );
 
 
 //        require_once( 'support/cron.php' );
 //        require_once( 'support/config-required-plugins.php' );
 
-        $this->i18n();
+//        $this->i18n();
     }
 
     /**
@@ -130,7 +136,7 @@ class Disciple_Tools_Saturation_Map {
         if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 
             // You can still use `array_unshift()` to add links at the beginning.
-            $links_array[] = '<a href="https://pray4movement.org">Pray4Movement</a>';
+            $links_array[] = '<a href="https://github.com/DiscipleTools/disciple-tools-saturation-map">Saturation Map</a>';
         }
 
         return $links_array;

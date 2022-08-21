@@ -109,7 +109,7 @@ class Disciple_Tools_Saturation_Map_Data_Source extends DT_Magic_Url_Base
                     <div style="padding:1em;border:2px solid gray;">
                         <h4>Recommended Resource: <a href="https://locationgrid.app">Location Grid Project</a></h4>
                         <p>
-                            Prayer.Global is build on Disciple.Tools open source software, and Disciple.Tools mapping and
+                            Saturation Map is build on Disciple.Tools open source software, and Disciple.Tools mapping and
                             geolocation system is an open source project called Location Grid Project. The Location Grid Project
                             is a geographic framework of world locations and polygons for disciple making movement saturation efforts.
                         </p>
@@ -178,7 +178,7 @@ class Disciple_Tools_Saturation_Map_Data_Source extends DT_Magic_Url_Base
                             </li>
                             <li>
                                 <u>Extrapolation</u><br>
-                                Prayer.Global has used the population data at the county and state levels from the Location Grid project and
+                                Saturation Map has used the population data at the county and state levels from the Location Grid project and
                                 divided percentages by the location population to arrive at the faith status population estimates.
                             </li>
                             <li>
