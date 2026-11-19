@@ -166,10 +166,18 @@ class DT_Saturation_Map extends DT_Magic_Url_Base
                 [
                     'methods'  => WP_REST_Server::CREATABLE,
                     'callback' => [ $this, 'endpoint' ],
-                    'permission_callback' => '__return_true',
+                    'permission_callback' => [ $this, 'can_view_church_counts' ],
                 ],
             ]
         );
+    }
+
+    /**
+     * Church counts come from the site's groups records, so only users who can view all groups see them
+     * unless the site opts in to a public map with the `dt_saturation_map_public_church_counts` filter.
+     */
+    public function can_view_church_counts() {
+        return apply_filters( 'dt_saturation_map_public_church_counts', false ) || DT_Posts::can_view_all( 'groups' );
     }
 
     public function endpoint( WP_REST_Request $request ) {
