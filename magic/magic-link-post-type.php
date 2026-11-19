@@ -239,6 +239,10 @@ class DT_Saturation_Map_Post_Type_Magic extends DT_Magic_Url_Base {
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
+        if ( ! $this->magic->verify_rest_endpoint_permissions_on_post( $request ) ) {
+            return new WP_Error( __METHOD__, "Invalid magic link", [ 'status' => 403 ] );
+        }
+
         $params = dt_recursive_sanitize_array( $params );
         $action = sanitize_text_field( wp_unslash( $params['action'] ) );
 
