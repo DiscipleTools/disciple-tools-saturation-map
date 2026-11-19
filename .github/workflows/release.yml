@@ -23,7 +23,7 @@ jobs:
       - name: Build project
         run: |
           mkdir disciple-tools-saturation-map
-          cp -r disciple-tools-saturation-map.php charts pages post-type redirects support version-control.json LICENSE SECURITY.md disciple-tools-saturation-map/
+          cp -r disciple-tools-saturation-map.php charts magic pages post-type redirects support version-control.json LICENSE SECURITY.md disciple-tools-saturation-map/
           zip -r disciple-tools-saturation-map.zip disciple-tools-saturation-map
       - name: Create Release
         id: create_release

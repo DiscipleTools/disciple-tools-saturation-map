@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Disciple.Tools - Saturation Map
- * Plugin URI: https://github.com/Pray4Movement/disciple-tools-saturation-map
+ * Plugin URI: https://github.com/DiscipleTools/disciple-tools-saturation-map
  * Description: Disciple Tools saturation map allows for simple surveying of different progress milestones leveraging an upvote system.
  * Text Domain: disciple-tools-saturation-map
  * Domain Path: /support/languages
  * Version:  0.1
  * Author URI: https://github.com/DiscipleTools
- * GitHub Plugin URI: https://github.com/Pray4Movement/disciple-tools-saturation-map
+ * GitHub Plugin URI: https://github.com/DiscipleTools/disciple-tools-saturation-map
  * Requires at least: 4.7.0
  * (Requires 4.7+ because of the integration of the REST API at 4.7 and the security requirements of this milestone version.)
  * Tested up to: 6.0
@@ -289,7 +289,7 @@ add_action( 'plugins_loaded', function (){
         }
         if ( class_exists( 'Puc_v4_Factory' ) ){
             Puc_v4_Factory::buildUpdateChecker(
-                'https://raw.githubusercontent.com/Pray4Movement/disciple-tools-saturation-map/master/version-control.json',
+                'https://raw.githubusercontent.com/DiscipleTools/disciple-tools-saturation-map/master/version-control.json',
                 __FILE__,
                 'disciple-tools-saturation-map'
             );
