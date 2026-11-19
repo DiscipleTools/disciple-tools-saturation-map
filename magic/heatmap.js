@@ -345,7 +345,7 @@ function load_map() {
                 window.previous_hover,
                 {hover: true}
               );
-              $('#title').html(e.features[0].properties.full_name)
+              $('#title').text(e.features[0].properties.full_name)
               $('#meter').val(jsObject.grid_data.data[e.features[0].properties.grid_id].percent)
               $('#saturation-goal').html(jsObject.grid_data.data[e.features[0].properties.grid_id].percent)
               $('#population').html(jsObject.grid_data.data[e.features[0].properties.grid_id].population)
@@ -362,7 +362,7 @@ function load_map() {
             }
           });
           map.on('click', i.toString()+'fills', function (e) {
-            $('#modal_tile').html(e.features[0].properties.full_name)
+            $('#modal_tile').text(e.features[0].properties.full_name)
             $('#modal_population').html(jsObject.grid_data.data[e.features[0].properties.grid_id].population)
 
             jQuery('.temp-spinner').html(`<span class="loading-spinner active"></span>`)
