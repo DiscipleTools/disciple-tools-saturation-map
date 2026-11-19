@@ -1,5 +1,8 @@
 <?php
 // @phpcs:disable
+if ( PHP_SAPI !== 'cli' ) {
+    exit;
+}
 // Builds a balanced states view of the world.
 // Extend PHP limits for large processing
 ini_set( 'memory_limit', '50000M' );
