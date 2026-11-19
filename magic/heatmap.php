@@ -2340,7 +2340,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                      SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2354,7 +2354,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2368,7 +2368,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2382,7 +2382,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2397,7 +2397,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                              SELECT 'World'
                              FROM $wpdb->postmeta as pm
-                                      JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                                      JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                                       JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                                       LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                              WHERE pm.meta_key = 'location_grid'
@@ -2411,7 +2411,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                      SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2422,7 +2422,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2433,7 +2433,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2444,7 +2444,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                         FROM $wpdb->postmeta as pm
-                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                        JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                         JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                         LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                         WHERE pm.meta_key = 'location_grid'
@@ -2455,7 +2455,7 @@ class DT_Saturation_Heatmap {
                     FROM (
                              SELECT 'World'
                              FROM $wpdb->postmeta as pm
-                                      JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                                      JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                                       JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                                       LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                              WHERE pm.meta_key = 'location_grid'
@@ -2469,7 +2469,7 @@ class DT_Saturation_Heatmap {
                         FROM (
                          SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                             FROM $wpdb->postmeta as pm
-                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                             JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                             LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                             WHERE pm.meta_key = 'location_grid'
@@ -2480,7 +2480,7 @@ class DT_Saturation_Heatmap {
                         FROM (
                             SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                             FROM $wpdb->postmeta as pm
-                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                             JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                             LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                             WHERE pm.meta_key = 'location_grid'
@@ -2491,7 +2491,7 @@ class DT_Saturation_Heatmap {
                         FROM (
                             SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                             FROM $wpdb->postmeta as pm
-                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                             JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                             LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                             WHERE pm.meta_key = 'location_grid'
@@ -2502,7 +2502,7 @@ class DT_Saturation_Heatmap {
                         FROM (
                             SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id, lg.admin4_grid_id, lg.admin5_grid_id
                             FROM $wpdb->postmeta as pm
-                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups'
+                            JOIN $wpdb->posts as p ON p.ID=pm.post_id AND p.post_type = 'groups' AND p.post_status = 'publish'
                             JOIN $wpdb->postmeta as pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key = 'group_type' AND pm2.meta_value = 'church'
                             LEFT JOIN $wpdb->dt_location_grid as lg ON pm.meta_value=lg.grid_id
                             WHERE pm.meta_key = 'location_grid'
